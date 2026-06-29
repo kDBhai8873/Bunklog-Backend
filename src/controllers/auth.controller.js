@@ -3,11 +3,8 @@ import AsyncHandler from "../utils/Asynchandler.js";
 
 const cookieOptions = {
   httpOnly: true,
-
   secure: process.env.NODE_ENV === "production",
-
   sameSite: "strict",
-
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
@@ -104,7 +101,10 @@ const getMe = AsyncHandler(async (req, res) => {
   const user = await User.findById(id);
 
   if (!user) {
-    throw new AppError(404, "user not found");
+    return res.status(404).json({
+      statusCode: 404,
+      message: "user not found",
+    });
   }
 
   return res.status(200).json({

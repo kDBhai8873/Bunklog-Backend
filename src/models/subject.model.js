@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const subjectSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: UserModel
+        ref: "UserModel"
     },
     name: {
         type: String,
