@@ -37,6 +37,23 @@ const getSubjects = AsyncHandler(async (req, res) => {
   });
 });
 
+const deleteSubject = AsyncHandler(async (req, res) => {
+  const { subId } = req.params;
+  const { id } = req.user;
+
+  const deletedSubject = await Subject.findByIdAndDelete({
+    _id: subId,
+    user: id,
+  });
+
+    return res.status(200).json({
+    status: 200,
+    data: deleteSubject,
+    message: "subject deleted successfully",
+  });
+
+});
+
 const incrementAttendedClasses = AsyncHandler(async (req, res) => {
   const { subId } = req.params;
   const { id } = req.user;
@@ -50,8 +67,8 @@ const incrementAttendedClasses = AsyncHandler(async (req, res) => {
       $inc: { attendedClasses: 1 },
     },
     {
-      returnDocument : 'after'
-    }
+      returnDocument: "after",
+    },
   );
 
   return res.status(200).json({
@@ -87,13 +104,13 @@ const decrementAttendedClasses = AsyncHandler(async (req, res) => {
       $inc: { attendedClasses: -1 },
     },
     {
-      returnDocument : 'after'
-    }
+      returnDocument: "after",
+    },
   );
 
   if (!updatedSubject) {
-    return res.status(404).json({ message: "Subject not found" })
-}
+    return res.status(404).json({ message: "Subject not found" });
+  }
 
   return res.status(200).json({
     status: 200,
@@ -115,8 +132,8 @@ const incrementTotalClasses = AsyncHandler(async (req, res) => {
       $inc: { totalClasses: 1 },
     },
     {
-      returnDocument : 'after'
-    }
+      returnDocument: "after",
+    },
   );
 
   if (!updatedSubject) {
@@ -156,8 +173,8 @@ const decrementTotalClasses = AsyncHandler(async (req, res) => {
       $inc: { totalClasses: -1 },
     },
     {
-      returnDocument : 'after',
-    }
+      returnDocument: "after",
+    },
   );
 
   return res.status(200).json({
@@ -170,6 +187,7 @@ const decrementTotalClasses = AsyncHandler(async (req, res) => {
 export {
   addSubject,
   getSubjects,
+  deleteSubject,
   incrementAttendedClasses,
   decrementAttendedClasses,
   incrementTotalClasses,

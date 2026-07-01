@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getMe, login, register } from "../controllers/auth.controller.js";
+import { getMe, login, logout, register } from "../controllers/auth.controller.js";
 import auth from "../middlewares/auth.middleware.js";
 
 const router = Router();
@@ -13,6 +13,7 @@ router.route("/home").get((req, res) => {
 // UN-PROTECTED ROUTES
 router.route("/register").post(register);
 router.route("/login").post(login);
+router.route("/logout").post(logout);
 
 
 // PROTECTED ROUTES

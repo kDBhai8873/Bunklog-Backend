@@ -96,6 +96,12 @@ const login = AsyncHandler(async (req, res) => {
   });
 });
 
+const logout = AsyncHandler(async (req, res) => {
+  return res.status(200).clearCookie("token").json({
+    message: "User logged out successfully",
+  });
+});
+
 const getMe = AsyncHandler(async (req, res) => {
   const { id } = req.user;
   const user = await User.findById(id);
@@ -114,4 +120,4 @@ const getMe = AsyncHandler(async (req, res) => {
   });
 });
 
-export { register, login, getMe };
+export { register, login,logout, getMe };
